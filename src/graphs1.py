@@ -81,9 +81,9 @@ class Graph:
 
     def addEdge(self,f,t,weight=0):
         if f not in self.vertList:
-            nv = self.addVertex(f)
+            self.addVertex(f)
         if t not in self.vertList:
-            nv = self.addVertex(t)
+            self.addVertex(t)
         self.vertList[f].addNeighbor(self.vertList[t], weight)
 
     def getVertices(self):
