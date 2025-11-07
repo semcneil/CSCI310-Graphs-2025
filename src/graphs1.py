@@ -99,7 +99,7 @@ if __name__ == '__main__':
     g = Graph()
     for i in range(6):
         g.addVertex(i)
-    g.vertList
+    print(g.vertList)
     g.addEdge(0,1,5)
     g.addEdge(0,5,2)
     g.addEdge(1,2,4)
@@ -112,3 +112,4 @@ if __name__ == '__main__':
     for v in g:
         for w in v.getConnections():
             print("( %s , %s )" % (v.getId(), w.getId()))
+    print(g)
