@@ -92,6 +92,14 @@ class Graph:
     def __iter__(self):
         return iter(self.vertList.values())
 
+    def __str__(self):
+        retStr = ''
+        for v in self:
+            for w in v.getConnections():
+                retStr += f"Vertex {v.getId()} is connected to {w.getId()} with weight {v.getWeight(w)}\n"
+                # retStr += "( %s , %s )\n" % (v.getId(), w.getId())
+        return retStr
+
 if __name__ == '__main__':
     """Runs if file called as script as opposed to being imported as a library
 
@@ -106,7 +114,7 @@ if __name__ == '__main__':
     v1.getId()
     print(v1.id)
     print(v1.connectedTo)
-    print(v1)  # what do the errors tell us?
+    # print(v1)  # what do the errors tell us?
     g = Graph()
     for i in range(6):
         g.addVertex(i)
@@ -123,4 +131,5 @@ if __name__ == '__main__':
     for v in g:
         for w in v.getConnections():
             print("( %s , %s )" % (v.getId(), w.getId()))
+    print('*'*20)
     print(g)
