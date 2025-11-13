@@ -8,8 +8,8 @@ def buildDict(wordFile):
     # create buckets of words that differ by one letter
     for line in wfile:
         word = line[:-1]
-        print(d)
-        set_trace()
+        # print(d)
+        # set_trace()
         for i in range(len(word)):
             bucket = word[:i] + '_' + word[i+1:]
             if bucket in d:
@@ -47,9 +47,10 @@ def buildGraph(wordFile):
 if __name__ == '__main__':
     """Runs if file called as script as opposed to being imported as a library
     """
-    # buildDict('./src/four.txt')
+    # myD = buildDict('./src/four.txt')
     myG = buildGraph('./src/four.txt')
     myV = myG.getVertex('TOME')
     print(myV.getConnections())
     for conn in myV.getConnections():
         print(conn.getId())
+    set_trace()

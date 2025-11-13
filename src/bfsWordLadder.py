@@ -54,10 +54,10 @@ if __name__ == '__main__':
     """
     # buildDict('./src/four.txt')
     myG = buildGraph('./src/four.txt')
-    myV = myG.getVertex('TOME')
-    print(myV.getConnections())
-    for conn in myV.getConnections():
-        print(conn.getId())
+    # myV = myG.getVertex('TOME')
+    # print(myV.getConnections())
+    # for conn in myV.getConnections():
+    #     print(conn.getId())
     bfs(myG, myG.getVertex('FOOL'))
     traverse(myG.getVertex('SAGE'))
     set_trace()
