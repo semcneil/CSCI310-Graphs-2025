@@ -72,9 +72,9 @@ def knightTour(n,path,u,limit):
 if __name__ == '__main__':
     """Runs if file called as script as opposed to being imported as a library
     """
-    boardSize = 8
+    boardSize = 6
     kg = knightGraph(boardSize)
-    v1 = kg.getVertex(1)  # get the Vertex named 0
+    v1 = kg.getVertex(0)  # get the Vertex named 0
     for conn in v1.getConnections():
         print(conn.getId())
     
