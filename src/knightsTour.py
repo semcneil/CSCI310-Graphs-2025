@@ -69,12 +69,61 @@ def knightTour(n,path,u,limit):
             done = True
         return done
 
+
+def orderByAvail(n):
+    resList = []
+    for v in n.getConnections():
+        if v.getColor() == 'white':
+            c = 0
+            for w in v.getConnections():
+                if w.getColor() == 'white':
+                    c = c + 1
+            resList.append((c,v))
+    resList.sort(key=lambda x: x[0])
+    # set_trace()
+    return [y[1] for y in resList]
+
+
+backTrackCount = 0
+def knightTourH(n,path,u,limit):
+        """
+
+        Parameters
+        ----------
+        n : int
+            The current depth in the search tree, initially 0
+        path : list
+            A list of the vertices visited up to this point, initially []
+        u : Vertex
+            The vertex in the graph that we wish to explore, start with a node from KnightGraph
+        limit : int
+            The maximum number of nodes in a complete graph
+        """
+        global backTrackCount
+        u.setColor('gray')
+        path.append(u)
+        if n < limit:
+            nbrList = orderByAvail(u)
+            i = 0
+            done = False
+            while i < len(nbrList) and not done:
+                if nbrList[i].getColor() == 'white':
+                    done = knightTourH(n+1, path, nbrList[i], limit)
+                i = i + 1
+            if not done: # prepare to backtrack
+                path.pop()
+                backTrackCount += 1
+                u.setColor('white')
+        else:
+            done = True
+        return done
+
 if __name__ == '__main__':
     """Runs if file called as script as opposed to being imported as a library
     """
-    boardSize = 6
+    boardSize = 5
     kg = knightGraph(boardSize)
-    v1 = kg.getVertex(0)  # get the Vertex named 0
+    v1 = kg.getVertex(1)  # get the Vertex named 0
     for conn in v1.getConnections():
         print(conn.getId())
     
@@ -82,8 +131,7 @@ if __name__ == '__main__':
     # are the paths always the same from the same starting point?
     path = []
     startTime = datetime.now()
-    knightTour(0,path,v1,boardSize*boardSize - 1)
-    # knightTour(0,path,v1,24)
+    knightTourH(0,path,v1,boardSize*boardSize - 1)
     endTime = datetime.now()
     print(f'Path found in {endTime - startTime}')
     pathIDs = []
