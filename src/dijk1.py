@@ -1,4 +1,5 @@
 from pythonds.graphs import PriorityQueue, Graph, Vertex
+from pdb import set_trace
 
 def dijkstra(aGraph,start):
     pq = PriorityQueue()
@@ -13,6 +14,22 @@ def dijkstra(aGraph,start):
                 nextVert.setDistance( newDist )
                 nextVert.setPred(currentVert)
                 pq.decreaseKey(nextVert,newDist)
+
+def printPaths(aGraph):
+    """
+    Prints the shortest paths found by Dijkstra starting at start
+    """
+    # Cycle through all the vertices
+    for v in aGraph:
+        print(f'{v.getId()}:{v.getDistance()} p = ', end='')
+    # Trace path to starting vertex, starting vertex will have dist of 0 and own predecessor
+        # Cycle through v.getPred() to list path
+        w = v.getPred()
+        while w:
+            print(f'{w.getId()} - ', end='')
+            w = w.getPred()
+        print()
+
 
 if __name__ == "__main__":
     """
@@ -33,4 +50,4 @@ if __name__ == "__main__":
     # run Dijkstra algorithm
     dijkstra(g, g.getVertex('u'))
     # Print shortest paths
-    print(g)
+    printPaths(g)
