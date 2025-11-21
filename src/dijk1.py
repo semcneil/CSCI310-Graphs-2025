@@ -15,20 +15,19 @@ def dijkstra(aGraph,start):
                 nextVert.setPred(currentVert)
                 pq.decreaseKey(nextVert,newDist)
 
-def printPaths(aGraph):
+def printDijkstra(myGraph):
     """
-    Prints the shortest paths found by Dijkstra starting at start
+    Prints the shortest paths from Dijkstra's algorithm
     """
-    # Cycle through all the vertices
-    for v in aGraph:
-        print(f'{v.getId()}:{v.getDistance()} p = ', end='')
-    # Trace path to starting vertex, starting vertex will have dist of 0 and own predecessor
-        # Cycle through v.getPred() to list path
-        w = v.getPred()
-        while w:
-            print(f'{w.getId()} - ', end='')
-            w = w.getPred()
-        print()
+    # Find path from each vertex to starting vertex and distance
+    for v in myGraph:
+      print(f'{v.getId()}:{v.getDistance()}', end='')
+      w = v.getPred()
+      while w:
+          print(f'->{w.getId()}', end='')
+          w = w.getPred()
+      print()
+    #   set_trace() 
 
 
 if __name__ == "__main__":
@@ -38,16 +37,26 @@ if __name__ == "__main__":
     # Create graph
     g = Graph()
     g.addEdge('u', 'v', 2)
+    g.addEdge('v', 'u', 2)
     g.addEdge('u', 'w', 5)
+    g.addEdge('w', 'u', 5)
     g.addEdge('u', 'x', 1)
+    g.addEdge('x', 'u', 1)
     g.addEdge('v', 'x', 2)
+    g.addEdge('x', 'v', 2)
     g.addEdge('v', 'w', 3)
+    g.addEdge('w', 'v', 3)
     g.addEdge('x', 'w', 3)
+    g.addEdge('w', 'x', 3)
     g.addEdge('x', 'y', 1)
+    g.addEdge('y', 'x', 1)
     g.addEdge('y', 'w', 1)
+    g.addEdge('w', 'y', 1)
     g.addEdge('y', 'z', 1)
+    g.addEdge('z', 'y', 1)
     g.addEdge('z', 'w', 5)
+    g.addEdge('w', 'z', 5)
     # run Dijkstra algorithm
-    dijkstra(g, g.getVertex('u'))
+    dijkstra(g, g.getVertex('z'))
     # Print shortest paths
-    printPaths(g)
+    printDijkstra(g)
