@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My Chess</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboard2@0.5.0/dist/chessboard2.min.css" integrity="sha384-47VeTDpmy4yT21gKPXQcLQYQZwlmz27gEH5NTrOmTk3G/SGvMyltclOW/Q8uE+sL" crossorigin="anonymous">
+</head>
+
+<body>
+    This uses <a href="https://github.com/oakmac/chessboard2">Chessboard2</a> <br />
+<!--- Begin Example HTML ------------------------------------------------------>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.12.1/chess.js"
+  integrity="sha384-8sJV/krC8iV2g7t0PolQxFVckDtxhfM5gNHNAFPG2ZS/bScudOjfsB8ewhG2xle8"
+  crossorigin="anonymous"></script>
+<div id="myBoard" style="width: 400px"></div>
+<p id="gameStatus"></p>
+<!--- End Example HTML -------------------------------------------------------->
+
+<script src="https://unpkg.com/@chrisoakman/chessboard2@0.5.0/dist/chessboard2.min.js" integrity="sha384-/KwQCjA1GWovZNV3QDVtvSMDzO4reGgarF/RqHipr7hIUElH3r5zNl9WEPPOBRIF" crossorigin="anonymous"></script>
+<script>
+function attachEvent (selectorOrId, eventType, fn) {
+  const el1 = document.getElementById(selectorOrId)
+  if (el1) { el1.addEventListener(eventType, fn); return }
+
+  const el2 = document.querySelector(selectorOrId)
+  if (el2) { el2.addEventListener(eventType, fn); return }
+
+  console.warn('Unable to attachEvent to element:', selectorOrId)
+}
+
+// --- Begin Example JS --------------------------------------------------------
+const game = new window.Chess()
+const board = window.Chessboard2('myBoard', 'start')
+
+updateStatus()
+
+window.setTimeout(makeRandomMove, 500)
+
+function makeRandomMove () {
+  const possibleMoves = game.moves()
+
+  // exit if the game is over
+  if (game.game_over()) return
+
+  const randomIdx = Math.floor(Math.random() * possibleMoves.length)
+  game.move(possibleMoves[randomIdx])
+  board.position(game.fen(), updateStatus)
+
+  window.setTimeout(makeRandomMove, 500)
+}
+
+function updateStatus () {
+  let statusHTML = ''
+
+  if (game.in_checkmate() && game.turn() === 'w') {
+    statusHTML = 'Game over: white is in checkmate. Black wins!'
+  } else if (game.in_checkmate() && game.turn() === 'b') {
+    statusHTML = 'Game over: black is in checkmate. White wins!'
+  } else if (game.in_stalemate() && game.turn() === 'w') {
+    statusHTML = 'Game is drawn. White is stalemated.'
+  } else if (game.in_stalemate() && game.turn() === 'b') {
+    statusHTML = 'Game is drawn. Black is stalemated.'
+  } else if (game.in_threefold_repetition()) {
+    statusHTML = 'Game is drawn by threefold repetition rule.'
+  } else if (game.insufficient_material()) {
+    statusHTML = 'Game is drawn by insufficient material.'
+  } else if (game.in_draw()) {
+    statusHTML = 'Game is drawn by fifty-move rule.'
+  }
+
+  document.getElementById('gameStatus').innerHTML = statusHTML
+}
+// --- End Example JS ----------------------------------------------------------
+</script>
+</body>
+</html>
