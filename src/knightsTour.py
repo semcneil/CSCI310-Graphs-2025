@@ -121,9 +121,9 @@ def knightTourH(n,path,u,limit):
 if __name__ == '__main__':
     """Runs if file called as script as opposed to being imported as a library
     """
-    boardSize = 5
+    boardSize = 9
     kg = knightGraph(boardSize)
-    v1 = kg.getVertex(1)  # get the Vertex named 0
+    v1 = kg.getVertex(0)  # get the starting Vertex
     for conn in v1.getConnections():
         print(conn.getId())
     
@@ -135,11 +135,13 @@ if __name__ == '__main__':
     endTime = datetime.now()
     print(f'Path found in {endTime - startTime}')
     pathIDs = []
+    # print the path
     for v in path:
         print(v.getId(), end=',')
         pathIDs.append(v.getId())
     print()
     pathIDs.sort()
+    # print sorted IDs to make sure all present
     print(pathIDs)
     print(f'Back tracked times: {backTrackCount}')
     # set_trace()

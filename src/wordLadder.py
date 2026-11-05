@@ -1,5 +1,4 @@
 from pythonds.graphs import Graph
-
 from pdb import set_trace
 
 def buildDict(wordFile):
@@ -47,7 +46,7 @@ def buildGraph(wordFile):
 if __name__ == '__main__':
     """Runs if file called as script as opposed to being imported as a library
     """
-    # myD = buildDict('./src/four.txt')
+    myD = buildDict('./src/four.txt')
     myG = buildGraph('./src/four.txt')
     myV = myG.getVertex('TOME')
     print(myV.getConnections())
