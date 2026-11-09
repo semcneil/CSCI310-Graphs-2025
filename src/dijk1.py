@@ -27,8 +27,18 @@ def printDijkstra(myGraph):
           print(f'->{w.getId()}', end='')
           w = w.getPred()
       print()
-    #   set_trace() 
 
+
+def printD2(g):
+    # cycle through each node, printing the distance and path
+    for v in g:
+        # print the distance and path
+        print(f'{v.dist}: {v.getId()}', end='')
+        p = v.pred
+        while p is not None:
+            print(f'->{p.getId()}', end='')
+            p = p.pred
+        print()
 
 if __name__ == "__main__":
     """
@@ -57,6 +67,9 @@ if __name__ == "__main__":
     g.addEdge('z', 'w', 5)
     g.addEdge('w', 'z', 5)
     # run Dijkstra algorithm
-    dijkstra(g, g.getVertex('z'))
+    dijkstra(g, g.getVertex('u'))
     # Print shortest paths
+    print("In class version 2026 November 09")
+    printD2(g)
+    print("Previous version")
     printDijkstra(g)
