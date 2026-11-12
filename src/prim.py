@@ -2,6 +2,22 @@ from pythonds.graphs import PriorityQueue, Graph, Vertex
 import sys
 from pdb import set_trace
 
+
+class myVertex(Vertex):
+    """Adds a routing table to the vertex
+    """
+    def __init__(self, num):
+        super().__init__(num)
+        self.route = []
+
+    def addRoute(self, nextVert):
+        self.route.append(nextVert)
+
+    def printRoute(self):
+        for v in self.route:
+            print(v.getId(), end=",")
+        print()
+
 class BiGraph(Graph):
     """
     Add bidirectional edge creation
@@ -15,6 +31,18 @@ class BiGraph(Graph):
         """
         self.addEdge(f, t, cost)
         self.addEdge(t, f, cost)
+
+    def addVertex(self,key):
+        self.numVertices = self.numVertices + 1
+        newVertex = myVertex(key)
+        self.vertices[key] = newVertex
+        return newVertex
+
+    def createRoutes(self):
+        """
+        Populate routes for all nodes assuming prim has been run
+        """
+
 
 def prim(G,start):
     pq = PriorityQueue()
@@ -65,7 +93,7 @@ if __name__ == "__main__":
     # g.addBiEdge('z', 'w', 5)
     g.addBiEdge('A', 'B', 2)
     g.addBiEdge('A', 'C', 3)
-    g.addBiEdge('A', 'B', 2)
+    # g.addBiEdge('A', 'B', 2)
     g.addBiEdge('B', 'C', 1)
     g.addBiEdge('B', 'D', 1)
     g.addBiEdge('B', 'E', 4)
@@ -73,7 +101,20 @@ if __name__ == "__main__":
     g.addBiEdge('D', 'E', 1)
     g.addBiEdge('E', 'F', 1)
     g.addBiEdge('F', 'G', 1)
-    # run Dijkstra algorithm
-    prim(g, g.getVertex('G'))
-    # Print shortest paths
+    # run Prim's algorithm algorithm
+    prim(g, g.getVertex('A'))
+    # Print Prim's results
     printPrim(g)
+
+    for n in g:
+        print(f'{n.getId()}: ', end='')
+        n.printRoute()
+    # myV = g.getVertex('A')
+    # myV.printRoute()
+
+    # v1 = myVertex('Z')
+    # v1.addRoute(g.getVertex('A'))
+    # v1.addRoute(g.getVertex('B'))
+    # v1.addRoute(g.getVertex('C'))
+    # v1.printRoute()
+    set_trace()
